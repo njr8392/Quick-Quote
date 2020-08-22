@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"os"
 	"strconv"
+	"crypto/sha256"
 )
 
 type Client struct {
@@ -26,6 +27,10 @@ type Quote struct {
 	Qty     int
 	EstRev  int
 	Usrid   int
+}
+type User struct {
+	Email string `json: email`
+	Password string`json: password` 
 }
 
 var conn *pgx.Conn
@@ -198,24 +203,54 @@ func updateClient(w http.ResponseWriter, r *http.Request) {
 	}
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 }
+//debug this behomth tomorrow
 func login(w http.ResponseWriter, r *http.Request){
 	if r.Method == "POST"{
-		fmt.Println(r.Body)
+		u := User{}
 		info, _ := ioutil.ReadAll(r.Body)	
 		defer r.Body.Close()
-		fmt.Println(string(info))
-	}
-	w.Write([]byte("Message Recieved"))
-}
-func isUser(user string, pass string)bool{
-	var userName, password string
-	var id int
-	if err := conn.QueryRow(context.Background(), "select * from users where Email = $1", &userName, &password, &id); err != nil{
-		fmt.Printf("Error retriving user: %s", err)
-		return false
-	}
-	return true
+		if err := json.Unmarshal(info, &u); err != nil{
+			fmt.Printf("Error parsing login information: %s\n", err)
+		}
+		account, ok := isUser()
+		if !ok{
+			//handle signup temp fix
+			w.Write([]byte("Need to signup!"))
+		}
+		//check passwords match
+		pswrd := checkPwrd(u.Password, account.Password)
+		if !pswrd{
 
+			//handle signup temp fix
+			w.Write([]byte("Need to signup!"))
+		}
+	}
+	
+	http.Redirect(w,r,"/client",http.StatusSeeOther)
+}
+
+//checks if the user is registered
+func isUser() (*User, bool){
+	var u User
+	if err := conn.QueryRow(context.Background(), "select * from users where Email = $1", &u.Email, &u.Password ); err != nil{
+		fmt.Printf("Error retriving user: %s", err)
+		return nil, false
+	}
+	return &u, true
+
+}
+//check if passwords match takes user entered password hashes it and converts back to a string to compare
+//to the saved type that is entered into the password
+func checkPwrd(pwd, savedpwd string)bool{
+	hash := sha256.Sum256([]byte(pwd))
+	if hashString(hash) == savedpwd{
+		return true
+	}
+	return false
+}
+//change sha256 into hex string to compare to the text type saved in the database
+func hashString(data [32]byte)string{
+	return fmt.Sprintf("%x", data)
 }
 func main() {
 	http.HandleFunc("/", login)
