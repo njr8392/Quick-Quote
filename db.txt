@@ -1,0 +1,21 @@
+//client table
+postgres=# CREATE TABLE client(
+ Name text,
+ Usrid serial primary key,
+ Street text,
+ City text, 
+ Email text,
+ Zip bigint);
+
+quoteapp=# CREATE TABLE quote(
+ Job text,
+ Product text,
+ Qty integer,
+ EstRev integer,
+ Usrid integer references client(Usrid));
+
+
+quoteapp=# CREATE TABLE users(
+ Email text,
+ Hash text, 
+ Userid serial);
