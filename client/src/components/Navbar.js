@@ -21,6 +21,9 @@ function Navbar() {
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 				<div class="navbar-nav">
                     <Link className="nav-item nav-link active" to= "/">Home<span class="sr-only">(current)</span></Link>
+					<Link className="nav-item nav-link" to="/client">
+						Clients
+					</Link>
 					<Link className="nav-item nav-link" to="/client/new">
 						New Client
 					</Link>

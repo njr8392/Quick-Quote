@@ -13,7 +13,9 @@ function LoginFrom() {
 	 			"Content-Type": "application/json",
 	 		},
 	 		body: JSON.stringify(info),
-	 	}).catch((err) => console.log(err));
+		 })
+		 .then(data => console.log(data))
+		 .catch((err) => console.log(err));
 	 }
 	useEffect(() => console.log(info));
 
