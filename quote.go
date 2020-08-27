@@ -228,7 +228,6 @@ func login(w http.ResponseWriter, r *http.Request){
 		}
 		fmt.Printf("Login sucessful")
 		http.Redirect(w, r, "/client", http.StatusSeeOther)
-		w.Write([]byte(u.Usrid))
 	}
 	
 }
