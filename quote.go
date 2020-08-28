@@ -137,7 +137,7 @@ func listData(data interface{}, query string) (interface{}, error) {
 
 	for rows.Next() {
 		err := rows.Scan(data)
-		if err != nil {
+		if err  != nil {
 			return nil, err
 		}
 		d = append(d, data)
@@ -226,7 +226,7 @@ func login(w http.ResponseWriter, r *http.Request){
 		//	w.Write([]byte("Need to signup!"))
 			fmt.Println("error checking password")
 		}
-		fmt.Printf("Login sucessful")
+		fmt.Printf("Login sucessful\n")
 		http.Redirect(w, r, "/client", http.StatusSeeOther)
 	}
 	

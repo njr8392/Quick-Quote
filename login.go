@@ -8,7 +8,7 @@ import(
 func isUser(email string) (*User, bool){
 	var u User
 	if err := conn.QueryRow(context.Background(), "select * from users where Email = $1", email).Scan(&u.Email, &u.Password, &u.Usrid ); err != nil{
-		fmt.Printf("Error retriving user: %s", err)
+		fmt.Printf("Error retriving user: %s\n", err)
 		return nil, false
 	}
 	return &u, true

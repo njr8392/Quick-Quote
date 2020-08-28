@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-import Clients from "./Client";
+import Clients from "./components/Client";
 import Navbar from "./components/Navbar";
 import ClientForm from "./components/ClientForm";
-import Quotes from "./Quote";
+import Quotes from "./components/Quote";
 import EditClient from "./components/EditClient";
 import QuoteForm from "./components/QuoteForm";
 import LoginFrom from "./components/LoginForm";

@@ -8,11 +8,11 @@ function EditClient() {
 // fix to edit render once
 	useEffect(()=>{
 		fetch(`/client/edit/?id=${id}`)
-		.then(res => res.json())
+		.then(res => res.json()) 
 		.then((result) => {
 			setClient(result)},
 	(error) => {setError(error)}
-	)}, [])
+	)})
 if (error){
 	return <div>Error loading data</div>
 }	
