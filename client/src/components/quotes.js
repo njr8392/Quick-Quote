@@ -4,9 +4,7 @@ function Quotes(){
     const [isLoaded, setIsLoaded] = useState(false);
     const [quote, setQuote] = useState([]);
   
-    // Note: the empty deps array [] means
-    // this useEffect will run once
-    // similar to componentDidMount()
+    //fetch quotes and render
     useEffect(() => {
       fetch("/quote")
         .then(res => res.json())
@@ -15,9 +13,6 @@ function Quotes(){
             setIsLoaded(true);
             setQuote(result);
           },
-          // Note: it's important to handle errors here
-          // instead of a catch() block so that we don't swallow
-          // exceptions from actual bugs in components.
           (error) => {
             setIsLoaded(true);
             setError(error);
