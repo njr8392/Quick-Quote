@@ -7,4 +7,4 @@ Built with Go and React
 
 
 Clients Page:
-![Client Sample](./images/Screen Shot 2020-09-02 at 11.59.15 PM.png)
+![Client Sample](./images/clientsample.png)
