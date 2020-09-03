@@ -12,7 +12,7 @@ function EditClient() {
 		.then((result) => {
 			setClient(result)},
 	(error) => {setError(error)}
-	)})
+	)}, [])
 if (error){
 	return <div>Error loading data</div>
 }	
